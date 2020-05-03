@@ -3,20 +3,25 @@
 #![no_main]
 
 use core::panic::PanicInfo;
+mod vga_buffer;
 
-static HELLO: &[u8] = b"Hello Github!";
+// Allocate beforehand for max performance
+static FIZZ:&'static str = "FIZZ";
+static BUZZ:&'static str = "BUZZ";
+static FIZZ_BUZZ:&'static str = "FIZZBUZZ";
 
 // This function is the entry point, since the linker looks for a function
 // named `_start` by default we don't want to mangle this.
 // It uses a diverging function to signal this will never terminate
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
-    let vga_buffer = 0xb8000 as *mut u8;
-
-    for (i, &byte) in HELLO.iter().enumerate() {
-        unsafe {
-            *vga_buffer.offset(i as isize * 2) = byte;
-            *vga_buffer.offset(i as isize * 2 + 1) = 0xb;
+    for n in 1..100 {
+        if n % 15 == 0 {
+            println!("{}", FIZZ_BUZZ);
+        } else if n % 3 == 0 {
+            println!("{}", FIZZ);
+        } else if n % 5 == 0 {
+            println!("{}", BUZZ);
         }
     }
 
