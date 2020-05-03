@@ -2,4 +2,6 @@
 
 From the wonderful tutorial [here](https://os.phil-opp.com/minimal-rust-kernel/)
 
-`cargo xrun`
+Build: `cargo xbuild`
+
+Run: `cargo xrun`
